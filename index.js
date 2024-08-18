@@ -41,6 +41,18 @@ async function run() {
       res.send(result);
     });
 
+    // search books
+    app.get("/searchedBooks", async (req, res) => {
+      const search = req.query.search;
+      console.log(search);
+      let query = {
+        title: { $regex: search, $options: "i" },
+      };
+
+      const result = await bookCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
     console.log(
